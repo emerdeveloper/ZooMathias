@@ -14,9 +14,9 @@ import android.support.v4.os.HandlerCompat.postDelayed
 class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.SplashTheme)
+        //setTheme(R.style.SplashTheme)
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_splash)
+        setContentView(R.layout.activity_splash)
         /*setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
@@ -29,7 +29,7 @@ class SplashActivity : AppCompatActivity() {
             val i = Intent(this@SplashActivity, HomeActivity::class.java)
             startActivity(i)
             finish()
-        }, 1000)
+        }, 1200)
     }
 
 }
