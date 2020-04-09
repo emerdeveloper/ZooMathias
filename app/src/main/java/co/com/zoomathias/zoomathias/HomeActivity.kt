@@ -1,6 +1,7 @@
 package co.com.zoomathias.zoomathias
 
 import android.app.Activity
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -17,7 +18,17 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        count.setOnClickListener { OnClickCount() }
         animationLeftToRight();
+
+    }
+
+    fun OnClickCount()
+    {
+        val intent = Intent(this, CountActivity::class.java)
+        //intent.putExtra("reason",reason)
+        //reason = intent.getStringExtra("reason")
+        startActivity(intent)
     }
 
     fun animationLeftToRight()
