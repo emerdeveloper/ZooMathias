@@ -24,6 +24,9 @@
     <style name="HomeTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/img_home_background</item>
     </style>
+    <style name="BackgroundSky" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_sky</item>
+    </style>
 
     <style name="FontNunitoExtraBoldBlackBase" parent="@style/FontBase">
         <item name="android:fontFamily" tools:targetApi="16">@font/nunito_extra_bold</item>

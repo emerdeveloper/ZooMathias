@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
+
+    <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp" app:srcCompat="@drawable/ic_return"
+            android:id="@+id/img_return" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:elevation="5dp"/>
+
+    <!--Animals-->
+
+    <android.support.constraint.ConstraintLayout
+            android:id="@+id/containerAnimals"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/containerCloud"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
+
+        <ImageView
+                android:id="@+id/animal_one"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:srcCompat="@drawable/img_giraffe"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true" />
+        <ImageView
+                android:id="@+id/animal_two"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:srcCompat="@drawable/img_giraffe"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true" />
+        <ImageView
+                android:id="@+id/animal_three"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:srcCompat="@drawable/img_giraffe"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"/>
+        <ImageView
+                android:id="@+id/animal_four"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:srcCompat="@drawable/img_giraffe"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true" />
+
+        <ImageView
+                android:id="@+id/animal_five"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:srcCompat="@drawable/img_giraffe"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"/>
+        <ImageView
+                android:id="@+id/animal_six"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:srcCompat="@drawable/img_giraffe"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"/>
+        <ImageView
+                android:id="@+id/animal_seven"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:srcCompat="@drawable/img_giraffe"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"/>
+        <ImageView
+                android:id="@+id/animal_eight"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:srcCompat="@drawable/img_giraffe"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"/>
+        <ImageView
+                android:id="@+id/animal_nine"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:srcCompat="@drawable/img_giraffe"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"/>
+
+
+        <android.support.constraint.helper.Flow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:constraint_referenced_ids="animal_one, animal_two, animal_three, animal_four, animal_five, animal_six, animal_seven, animal_eight, animal_nine"
+                app:flow_verticalAlign="center"
+                app:flow_verticalStyle="packed"
+                app:flow_firstHorizontalStyle="packed"
+                app:flow_horizontalGap="2dp"
+                app:flow_verticalGap="2dp"
+                app:flow_wrapMode="chain"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"/>
+
+        <!-- <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/img_cloud"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    android:layout_centerInParent="true"/>
+        </RelativeLayout>-->
+    </android.support.constraint.ConstraintLayout>
+
+    <!--clouds-->
+
+    <LinearLayout
+            android:id="@+id/containerCloud"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:background="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/containerAnimals" android:weightSum="3"
+            android:gravity="center_vertical">
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="20dp">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/img_cloud"
+                    android:id="@+id/img_cloud_left"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+            <ImageView
+                    android:id="@+id/img_number_left"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:srcCompat="@drawable/number_three_recognize"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    app:layout_constraintBottom_toBottomOf="@id/img_cloud_left"
+                    app:layout_constraintTop_toTopOf="@id/img_cloud_left"
+                    app:layout_constraintEnd_toEndOf="@id/img_cloud_left"
+                    app:layout_constraintStart_toStartOf="@id/img_cloud_left"
+                    android:layout_marginTop="8dp" android:layout_marginStart="8dp" android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"/>
+        </android.support.constraint.ConstraintLayout>
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="20dp">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/img_cloud"
+                    android:id="@+id/img_cloud_center"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+            <ImageView
+                    android:id="@+id/img_number_center"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:srcCompat="@drawable/number_eight_recognize"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    app:layout_constraintBottom_toBottomOf="@id/img_cloud_center"
+                    app:layout_constraintTop_toTopOf="@id/img_cloud_center"
+                    app:layout_constraintEnd_toEndOf="@id/img_cloud_center"
+                    app:layout_constraintStart_toStartOf="@id/img_cloud_center"
+                    android:layout_marginTop="8dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"/>
+        </android.support.constraint.ConstraintLayout>
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="20dp">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/img_cloud"
+                    android:id="@+id/img_cloud_right"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+            <ImageView
+                    android:id="@+id/img_number_right"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:srcCompat="@drawable/number_four_recognize"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    app:layout_constraintBottom_toBottomOf="@id/img_cloud_right"
+                    app:layout_constraintTop_toTopOf="@id/img_cloud_right"
+                    app:layout_constraintEnd_toEndOf="@id/img_cloud_right"
+                    app:layout_constraintStart_toStartOf="@id/img_cloud_right"
+                    android:layout_marginTop="8dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"/>
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
