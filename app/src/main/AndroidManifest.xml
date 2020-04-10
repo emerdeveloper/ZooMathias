@@ -10,11 +10,6 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".HomeActivity"
-                android:screenOrientation="landscape"
-                android:theme="@style/HomeTheme">
-        </activity>
-        <activity
                 android:name=".SplashActivity"
                 android:screenOrientation="landscape"
                 android:theme="@style/AppTheme.NoActionBar">
@@ -23,6 +18,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity
+                android:name=".HomeActivity"
+                android:screenOrientation="landscape"
+                android:theme="@style/HomeTheme">
         </activity>
         <activity android:name=".CountActivity"
                   android:screenOrientation="landscape"
