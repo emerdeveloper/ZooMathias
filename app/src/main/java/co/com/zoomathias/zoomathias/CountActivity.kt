@@ -1,11 +1,16 @@
 package co.com.zoomathias.zoomathias
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
+import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_count.*
 import kotlin.random.Random
@@ -42,6 +47,7 @@ class CountActivity : AppCompatActivity() {
             else -> Toast.makeText(this, "Answer no valid", Toast.LENGTH_SHORT).show()
         }
         if (positionCorrectOption == positionSelected) {
+            showMessageDialog()
             Toast.makeText(this, "You answer is correct: " + correctOption + "in position: "+ positionCorrectOption, Toast.LENGTH_SHORT).show()
         }
         else {
@@ -198,5 +204,17 @@ class CountActivity : AppCompatActivity() {
         option_one.startAnimation(animation)
         option_two.startAnimation(animation)
         option_three.startAnimation(animation)
+    }
+
+    private fun showMessageDialog() {
+        var builder = AlertDialog.Builder(this)
+        var dialogView = this.layoutInflater.inflate(R.layout.message_dialog_congratulations,null)
+        builder.setView(dialogView)
+        var messageDialog = builder.show()
+        messageDialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        messageDialog.setCancelable(false)
+        messageDialog.setCanceledOnTouchOutside(false)
+        var acceptButton = dialogView.findViewById<TextView>(R.id.btn_accept)
+        acceptButton.setOnClickListener { messageDialog.cancel()}
     }
 }
