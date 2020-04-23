@@ -31,7 +31,7 @@ class CountActivity : AppCompatActivity() {
         setContentView(R.layout.activity_count)
 
         shuffleQuestion()
-        containerAnimals.setOnClickListener { shuffleQuestion() }
+        //containerAnimals.setOnClickListener { shuffleQuestion() }
         option_one.setOnClickListener { view -> onSelectAnswer(view)  }
         option_two.setOnClickListener { view -> onSelectAnswer(view)  }
         option_three.setOnClickListener { view -> onSelectAnswer(view)  }
@@ -65,7 +65,7 @@ class CountActivity : AppCompatActivity() {
         }
         else {
             showMessageDialog(true)
-            Toast.makeText(this, "Incorrect Answer", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "Incorrect Answer", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -76,6 +76,7 @@ class CountActivity : AppCompatActivity() {
             if (score >= 4)
             {
                 showMessageWinner()
+                playWinner()
             }
             else
             {
@@ -287,17 +288,32 @@ class CountActivity : AppCompatActivity() {
         messageDialog.setCanceledOnTouchOutside(false)
         var acceptButton = dialogView.findViewById<TextView>(R.id.btn_accept)
         var animation = dialogView.findViewById<LottieAnimationView>(R.id.animation)
+        var animation2 = dialogView.findViewById<LottieAnimationView>(R.id.animation2)
         var animationConfeti = dialogView.findViewById<LottieAnimationView>(R.id.animationConfeti)
         animationConfeti.visibility = View.VISIBLE
 
         animation.setAnimation("smile.json")
         animation.playAnimation()
+        //animation.repeatCount = 3
         animationConfeti.setAnimation("confeti.json")
         animationConfeti.playAnimation()
         animationConfeti.repeatCount = LottieDrawable.INFINITE
 
         var animationAdapter = AnimatorListenerAdapter(
-            onStart = { playWinner() },
+            onStart = {  },
+            onEnd = {
+                animation2.visibility = View.VISIBLE
+                animation.visibility = View.GONE
+                animation2.setAnimation("star.json")
+                animation2.playAnimation()
+                animation.repeatCount = 2
+            },
+            onCancel = {},
+            onRepeat = {}
+        )
+
+        var animationAdapter2 = AnimatorListenerAdapter(
+            onStart = {  },
             onEnd = {
                 messageDialog.cancel()
             },
@@ -306,6 +322,7 @@ class CountActivity : AppCompatActivity() {
         )
 
         animation.addAnimatorListener(animationAdapter)
+        animation2.addAnimatorListener(animationAdapter2)
         acceptButton.setOnClickListener { messageDialog.cancel()}
     }
 
@@ -324,14 +341,12 @@ class CountActivity : AppCompatActivity() {
         messageDialog.setCanceledOnTouchOutside(false)
         var acceptButton = dialogView.findViewById<TextView>(R.id.btn_accept)
         var animation = dialogView.findViewById<LottieAnimationView>(R.id.animation)
-        var animationConfeti = dialogView.findViewById<LottieAnimationView>(R.id.animationConfeti)
-        animationConfeti.visibility = View.VISIBLE
+        var animationConfetti = dialogView.findViewById<LottieAnimationView>(R.id.animationConfeti)
+        animationConfetti.visibility = View.GONE
 
         animation.setAnimation("sad.json")
         animation.playAnimation()
-        /*animationConfeti.setAnimation("confeti.json")
-        animationConfeti.playAnimation()
-        animationConfeti.repeatCount = LottieDrawable.INFINITE*/
+        animation.repeatCount = 2
 
         var animationAdapter = AnimatorListenerAdapter(
             onStart = { },
