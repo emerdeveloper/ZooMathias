@@ -19,6 +19,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         count.setOnClickListener { OnClickCount() }
+        recognize.setOnClickListener { OnClickRecognize() }
         animationLeftToRight();
 
     }
@@ -28,6 +29,12 @@ class HomeActivity : AppCompatActivity() {
         val intent = Intent(this, CountActivity::class.java)
         //intent.putExtra("reason",reason)
         //reason = intent.getStringExtra("reason")
+        startActivity(intent)
+    }
+
+    fun OnClickRecognize()
+    {
+        val intent = Intent(this, ShopActivity::class.java)
         startActivity(intent)
     }
 
