@@ -28,7 +28,8 @@
                 android:screenOrientation="landscape"
                 android:theme="@style/BackgroundSky"></activity>
         <activity android:name=".ShopActivity"
-                  android:screenOrientation="landscape"></activity>
+                  android:screenOrientation="landscape"
+                  android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

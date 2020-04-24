@@ -5,10 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import co.com.zoomathias.zoomathias.R
+import co.com.zoomathias.zoomathias.models.Character
 import com.airbnb.lottie.LottieDrawable
 import kotlinx.android.synthetic.main.shop_item.view.*
 
-class CharacterRecyclerViewAdapter (val items : ArrayList<String>, val clickListener: (String) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CharacterRecyclerViewAdapter (val items : ArrayList<Character>, val clickListener: (Character) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): CharacterRecyclerViewHolderItem {
         val inflater = LayoutInflater.from(parent.context)
@@ -26,11 +27,11 @@ class CharacterRecyclerViewAdapter (val items : ArrayList<String>, val clickList
 
     //ViewHolder
     class CharacterRecyclerViewHolderItem(itemView: View) : RecyclerView.ViewHolder(itemView){
-        fun bind(characterImage: String, clickListener: (String) -> Unit) {
-            itemView.charcter_framework.setAnimation(characterImage)
+        fun bind(character: Character, clickListener: (Character) -> Unit) {
+            itemView.charcter_framework.setAnimation(character.nameFile)
             itemView.charcter_framework.repeatCount = LottieDrawable.INFINITE
             itemView.charcter_framework.playAnimation()
-            itemView.setOnClickListener { clickListener(characterImage) }
+            itemView.setOnClickListener { clickListener(character) }
         }
     }
 }
