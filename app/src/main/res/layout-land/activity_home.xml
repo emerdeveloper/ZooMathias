@@ -7,6 +7,16 @@
         android:layout_height="match_parent"
         tools:context=".HomeActivity">
 
+    <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/charcter"
+            android:layout_width="230dp"
+            android:layout_height="230dp"
+            app:layout_constraintBottom_toTopOf="@+id/img_info"
+            app:layout_constraintEnd_toStartOf="@+id/container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true" />
+
     <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"

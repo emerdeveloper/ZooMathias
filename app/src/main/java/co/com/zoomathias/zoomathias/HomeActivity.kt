@@ -2,26 +2,38 @@ package co.com.zoomathias.zoomathias
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.appcompat.app.AppCompatActivity
+import co.com.zoomathias.zoomathias.utils.Constants
+import com.airbnb.lottie.LottieDrawable
 import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
 import kotlin.concurrent.scheduleAtFixedRate
 
-class HomeActivity : AppCompatActivity() {
 
+class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
         count.setOnClickListener { OnClickCount() }
-        recognize.setOnClickListener { OnClickRecognize() }
+        img_config.setOnClickListener { OnClickShop() }
         animationLeftToRight();
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+            super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == Constants.REQUEST_CODE && resultCode == Constants.RESULT_CODE) {
+            val characterImage = data!!.getStringExtra(Constants.EXTRA_NAME_CHARACTER)
+            charcter.setAnimation(characterImage)
+            charcter.playAnimation()
+            charcter.repeatCount = LottieDrawable.INFINITE
+        }
     }
 
     fun OnClickCount()
@@ -32,10 +44,10 @@ class HomeActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun OnClickRecognize()
+    fun OnClickShop()
     {
         val intent = Intent(this, ShopActivity::class.java)
-        startActivity(intent)
+        startActivityForResult(intent, Constants.REQUEST_CODE)
     }
 
     fun animationLeftToRight()
