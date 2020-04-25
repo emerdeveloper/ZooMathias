@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
+
+    <ImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            app:srcCompat="@drawable/ic_return"
+            android:id="@+id/img_return"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:elevation="5dp"/>
+
+    <!--Animals-->
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.60"/>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/containerAnimals"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintBottom_toBottomOf="@+id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+                android:id="@+id/animal_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"
+                app:srcCompat="@drawable/animal_rabbit"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="71dp"
+                tools:layout_editor_absoluteY="25dp" />
+
+        <ImageView
+                android:id="@+id/animal_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"
+                app:srcCompat="@drawable/animal_rabbit"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="158dp"
+                tools:layout_editor_absoluteY="25dp" />
+
+        <ImageView
+                android:id="@+id/animal_three"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"
+                app:srcCompat="@drawable/animal_rabbit"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="245dp"
+                tools:layout_editor_absoluteY="25dp" />
+
+        <ImageView
+                android:id="@+id/animal_four"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"
+                app:srcCompat="@drawable/animal_rabbit"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="332dp"
+                tools:layout_editor_absoluteY="25dp" />
+
+        <ImageView
+                android:id="@+id/animal_five"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"
+                app:srcCompat="@drawable/animal_rabbit"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="373dp"
+                tools:layout_editor_absoluteY="25dp" />
+
+        <ImageView
+                android:id="@+id/animal_six"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"
+                app:srcCompat="@drawable/animal_rabbit"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="460dp"
+                tools:layout_editor_absoluteY="25dp" />
+
+        <ImageView
+                android:id="@+id/animal_seven"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"
+                app:srcCompat="@drawable/animal_rabbit"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="102dp"
+                tools:layout_editor_absoluteY="117dp" />
+
+        <ImageView
+                android:id="@+id/animal_eight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"
+                app:srcCompat="@drawable/animal_rabbit"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="250dp"
+                tools:layout_editor_absoluteY="117dp" />
+
+        <ImageView
+                android:id="@+id/animal_nine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"
+                app:srcCompat="@drawable/animal_rabbit"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="404dp"
+                tools:layout_editor_absoluteY="117dp" />
+
+
+        <androidx.constraintlayout.helper.widget.Flow
+                android:id="@+id/constraintFlow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:orientation="horizontal"
+                app:constraint_referenced_ids="animal_one, animal_two, animal_three, animal_four, animal_five, animal_six, animal_seven, animal_eight, animal_nine"
+                app:flow_firstHorizontalStyle="packed"
+                app:flow_horizontalGap="2dp"
+                app:flow_verticalAlign="center"
+                app:flow_verticalGap="2dp"
+                app:flow_verticalStyle="packed"
+                app:flow_wrapMode="chain"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--clouds-->
+
+    <LinearLayout
+            android:id="@+id/containerCloud"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:weightSum="3"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toBottomOf="@+id/guideline">
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="20dp"
+                android:id="@+id/option_one">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/img_cloud"
+                    android:id="@+id/img_cloud_left"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+            <ImageView
+                    android:id="@+id/img_number_left"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:srcCompat="@drawable/number_three_recognize"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    app:layout_constraintBottom_toBottomOf="@id/img_cloud_left"
+                    app:layout_constraintTop_toTopOf="@id/img_cloud_left"
+                    app:layout_constraintEnd_toEndOf="@id/img_cloud_left"
+                    app:layout_constraintStart_toStartOf="@id/img_cloud_left"
+                    android:layout_marginTop="8dp" android:layout_marginStart="8dp" android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="20dp" android:id="@+id/option_two">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/img_cloud"
+                    android:id="@+id/img_cloud_center"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+            <ImageView
+                    android:id="@+id/img_number_center"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:srcCompat="@drawable/number_eight_recognize"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    app:layout_constraintBottom_toBottomOf="@id/img_cloud_center"
+                    app:layout_constraintTop_toTopOf="@id/img_cloud_center"
+                    app:layout_constraintEnd_toEndOf="@id/img_cloud_center"
+                    app:layout_constraintStart_toStartOf="@id/img_cloud_center"
+                    android:layout_marginTop="8dp" android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="20dp" android:id="@+id/option_three">
+            <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/img_cloud"
+                    android:id="@+id/img_cloud_right"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+            <ImageView
+                    android:id="@+id/img_number_right"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    app:srcCompat="@drawable/number_four_recognize"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="true"
+                    app:layout_constraintBottom_toBottomOf="@id/img_cloud_right"
+                    app:layout_constraintTop_toTopOf="@id/img_cloud_right"
+                    app:layout_constraintEnd_toEndOf="@id/img_cloud_right"
+                    app:layout_constraintStart_toStartOf="@id/img_cloud_right"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
