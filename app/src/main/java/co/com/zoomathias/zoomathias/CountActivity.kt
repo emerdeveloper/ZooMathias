@@ -2,16 +2,20 @@ package co.com.zoomathias.zoomathias
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.support.v7.app.AppCompatActivity
+import android.media.MediaPlayer
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
-import android.view.LayoutInflater
+import androidx.appcompat.app.AlertDialog
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import co.com.zoomathias.zoomathias.utils.AnimatorListenerAdapter
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieDrawable
 import kotlinx.android.synthetic.main.activity_count.*
 import kotlin.random.Random
 
@@ -19,20 +23,22 @@ class CountActivity : AppCompatActivity() {
 
     private var correctOption: Int = 0
     private var positionCorrectOption: Int = 0
+    private var score : Int = 0
+    private var Attempts: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_count)
 
-        onClickContainerAnimals()
-        containerAnimals.setOnClickListener { onClickContainerAnimals() }
+        shuffleQuestion()
+        //containerAnimals.setOnClickListener { shuffleQuestion() }
         option_one.setOnClickListener { view -> onSelectAnswer(view)  }
         option_two.setOnClickListener { view -> onSelectAnswer(view)  }
         option_three.setOnClickListener { view -> onSelectAnswer(view)  }
         img_return.setOnClickListener { finish() }
     }
 
-    private fun onClickContainerAnimals() {
+    private fun shuffleQuestion() {
         animationNumbers()
         printImages()
         animationAnimals()
@@ -46,16 +52,43 @@ class CountActivity : AppCompatActivity() {
             R.id.option_three -> positionSelected = 2
             else -> Toast.makeText(this, "Answer no valid", Toast.LENGTH_SHORT).show()
         }
+        validateAnswers(positionSelected)
+    }
+
+    private fun validateAnswers(positionSelected : Int)
+    {
+        Attempts++
         if (positionCorrectOption == positionSelected) {
+            score++
             showMessageDialog()
-            Toast.makeText(this, "You answer is correct: " + correctOption + "in position: "+ positionCorrectOption, Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "You answer is correct: " + correctOption + "in position: "+ positionCorrectOption, Toast.LENGTH_SHORT).show()
         }
         else {
-            Toast.makeText(this, "Incorrect Answer", Toast.LENGTH_SHORT).show()
+            showMessageDialog(true)
+            //Toast.makeText(this, "Incorrect Answer", Toast.LENGTH_SHORT).show()
         }
     }
 
-
+    private fun validateScore(messageDialog: AlertDialog)
+    {
+        if (Attempts == 6)
+        {
+            if (score >= 4)
+            {
+                showMessageWinner()
+                playWinner()
+            }
+            else
+            {
+                showMessageFailed()
+            }
+        }
+        else
+        {
+            shuffleQuestion()
+        }
+        messageDialog.cancel()
+    }
 
     private fun printImages() {
         var randomNumbers = getRandomNumbers()
@@ -206,15 +239,125 @@ class CountActivity : AppCompatActivity() {
         option_three.startAnimation(animation)
     }
 
-    private fun showMessageDialog() {
+    private fun showMessageDialog(isFail : Boolean = false) {
         var builder = AlertDialog.Builder(this)
         var dialogView = this.layoutInflater.inflate(R.layout.message_dialog_congratulations,null)
         builder.setView(dialogView)
         var messageDialog = builder.show()
-        messageDialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        messageDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         messageDialog.setCancelable(false)
         messageDialog.setCanceledOnTouchOutside(false)
         var acceptButton = dialogView.findViewById<TextView>(R.id.btn_accept)
+        var animation = dialogView.findViewById<LottieAnimationView>(R.id.animation)
+        var containerMessageDialog = dialogView.findViewById<ConstraintLayout>(R.id.containerMessageDialog)
+
+        if (isFail)
+        {
+            containerMessageDialog.setBackgroundColor(Color.WHITE);
+            animation.setAnimation("oops.json")
+            animation.playAnimation()
+        }
+
+        var animationAdapter = AnimatorListenerAdapter(
+            onStart = { playSound(isFail) },
+            onEnd = {
+                validateScore(messageDialog)
+            },
+            onCancel = {},
+            onRepeat = {}
+        )
+
+        animation.addAnimatorListener(animationAdapter)
+        acceptButton.setOnClickListener { validateScore(messageDialog)}
+    }
+
+    private fun playSound(isFail : Boolean = false) {
+        var mediaPlayer: MediaPlayer = if (isFail) MediaPlayer.create(this, R.raw.failed) else {
+            MediaPlayer.create(this, R.raw.success_v2)
+        }
+        mediaPlayer?.start()
+    }
+
+    private fun showMessageWinner() {
+        var builder = AlertDialog.Builder(this)
+        var dialogView = this.layoutInflater.inflate(R.layout.message_dialog_congratulations,null)
+        builder.setView(dialogView)
+        var messageDialog = builder.show()
+        messageDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        messageDialog.setCancelable(false)
+        messageDialog.setCanceledOnTouchOutside(false)
+        var acceptButton = dialogView.findViewById<TextView>(R.id.btn_accept)
+        var animation = dialogView.findViewById<LottieAnimationView>(R.id.animation)
+        var animation2 = dialogView.findViewById<LottieAnimationView>(R.id.animation2)
+        var animationConfeti = dialogView.findViewById<LottieAnimationView>(R.id.animationConfeti)
+        animationConfeti.visibility = View.VISIBLE
+
+        animation.setAnimation("smile.json")
+        animation.playAnimation()
+        //animation.repeatCount = 3
+        animationConfeti.setAnimation("confeti.json")
+        animationConfeti.playAnimation()
+        animationConfeti.repeatCount = LottieDrawable.INFINITE
+
+        var animationAdapter = AnimatorListenerAdapter(
+            onStart = {  },
+            onEnd = {
+                animation2.visibility = View.VISIBLE
+                animation.visibility = View.GONE
+                animation2.setAnimation("star.json")
+                animation2.playAnimation()
+                animation.repeatCount = 2
+            },
+            onCancel = {},
+            onRepeat = {}
+        )
+
+        var animationAdapter2 = AnimatorListenerAdapter(
+            onStart = {  },
+            onEnd = {
+                messageDialog.cancel()
+            },
+            onCancel = {},
+            onRepeat = {}
+        )
+
+        animation.addAnimatorListener(animationAdapter)
+        animation2.addAnimatorListener(animationAdapter2)
+        acceptButton.setOnClickListener { messageDialog.cancel()}
+    }
+
+    private fun playWinner() {
+        var mediaPlayer: MediaPlayer = MediaPlayer.create(this, R.raw.winner)
+        mediaPlayer?.start()
+    }
+
+    private fun showMessageFailed() {
+        var builder = AlertDialog.Builder(this)
+        var dialogView = this.layoutInflater.inflate(R.layout.message_dialog_congratulations,null)
+        builder.setView(dialogView)
+        var messageDialog = builder.show()
+        messageDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        messageDialog.setCancelable(false)
+        messageDialog.setCanceledOnTouchOutside(false)
+        var acceptButton = dialogView.findViewById<TextView>(R.id.btn_accept)
+        var animation = dialogView.findViewById<LottieAnimationView>(R.id.animation)
+        var animationConfetti = dialogView.findViewById<LottieAnimationView>(R.id.animationConfeti)
+        animationConfetti.visibility = View.GONE
+
+        animation.setAnimation("sad.json")
+        animation.playAnimation()
+        animation.repeatCount = 2
+
+        var animationAdapter = AnimatorListenerAdapter(
+            onStart = { },
+            onEnd = {
+                messageDialog.cancel()
+            },
+            onCancel = {},
+            onRepeat = {}
+        )
+
+        animation.addAnimatorListener(animationAdapter)
         acceptButton.setOnClickListener { messageDialog.cancel()}
     }
 }
