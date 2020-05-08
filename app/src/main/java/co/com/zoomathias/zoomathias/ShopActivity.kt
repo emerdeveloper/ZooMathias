@@ -8,13 +8,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
-import co.com.zoomathias.zoomathias.models.Character
+import co.com.zoomathias.zoomathias.businesslogic.CharactersShopBrains
 import co.com.zoomathias.zoomathias.utils.AnimatorListenerAdapter
 import co.com.zoomathias.zoomathias.utils.CharacterRecyclerViewAdapter
 import co.com.zoomathias.zoomathias.utils.Constants
+import co.com.zoomathias.zoomathias.utils.CustomSharedPreferences
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import kotlinx.android.synthetic.main.activity_shop.*
@@ -22,52 +22,46 @@ import kotlinx.android.synthetic.main.activity_shop.img_return
 
 class ShopActivity : AppCompatActivity() {
 
-    private var userStars: Int = 5
-    private var characterImage: String = ""
-    private var characterStars: Int = 0
+
+    private var characterShopBrain = CharactersShopBrains(5)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop)
 
-        recyclerView.layoutManager =  LinearLayoutManager(this)
+        recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.hasFixedSize()
-        recyclerView.adapter = CharacterRecyclerViewAdapter(addCharacteres(), {
-                characterSelected : Character -> barberItemClicked(characterSelected)
-        })
+        recyclerView.adapter = CharacterRecyclerViewAdapter(characterShopBrain.getCharacters(), this::barberItemClicked)
 
         img_return.setOnClickListener { finishActivity() }
         charcter.setOnClickListener { validateShopCharacter() }
-        printUserStars()
+        characterShopBrain.showUserStars(starImages())
     }
 
     private fun finishActivity() {
-        setResult(Constants.RESULT_CODE, Intent().putExtra(Constants.EXTRA_NAME_CHARACTER, characterImage))
+        if (characterShopBrain.boughtCharacter()) {
+
+            setResult(
+                Constants.RESULT_CODE,
+                Intent().putExtra(Constants.EXTRA_NAME_CHARACTER, characterShopBrain.getCharacterImage())
+            )
+            val sharedPreferences = CustomSharedPreferences(this)
+            sharedPreferences.saveCharacter(characterShopBrain.getCharacterImage())
+        }
         finish()
     }
 
-    private fun barberItemClicked(characterSelected : Character) {
+    private fun barberItemClicked(characterSelected : Int) {
         //Toast.makeText(this, "Clicked: ${characterSelected}", Toast.LENGTH_LONG).show()
-        characterImage = characterSelected.nameFile
-        characterStars = characterSelected.starRating
-        charcter.setAnimation(characterSelected.nameFile)
+        characterShopBrain.characterSelected(characterSelected)
+        charcter.setAnimation(characterShopBrain.getCharacterImage())
         charcter.playAnimation()
         charcter.repeatCount = LottieDrawable.INFINITE
-        printCharacterStars(characterSelected.starRating)
+        showStars()
     }
 
     private fun validateShopCharacter() {
-        showMessageDialogCannotGetCharacter((userStars >= characterStars))
-    }
-
-    private fun addCharacteres() : ArrayList<Character> {
-        val characteres: ArrayList<Character> = ArrayList()
-        characteres.add(Character("chicken.json", 8))
-        characteres.add(Character("mouse.json", 6))
-        characteres.add(Character("cat.json", 6))
-        characteres.add(Character("pigeon.json", 4))
-        characteres.add(Character("bee.json", 5))
-        return characteres
+        showMessageDialogCannotGetCharacter()
     }
 
     private fun starImages(): List<ImageView> {
@@ -76,38 +70,12 @@ class ShopActivity : AppCompatActivity() {
             star_seven, star_eight, star_nine)
     }
 
-    private fun printUserStars() {
-        var listStarImages = starImages()
-        for (x in listStarImages.indices) {
-            if (x < userStars) {
-                listStarImages[x].setImageResource(R.drawable.img_star)
-            }
-            else
-            {
-                listStarImages[x].visibility = View.GONE
-            }
-        }
+    private fun showStars() {
+        characterShopBrain.showUserStars(starImages())
+        characterShopBrain.showCharacterStars(starImages())
     }
 
-    private fun printCharacterStars(characterStarRating: Int) {
-        printUserStars()
-        var listStarImages = starImages()
-        if (userStars < characterStarRating) {
-            for (x in (userStars) until characterStarRating) {
-                listStarImages[x].setImageResource(R.drawable.img_star_disabled)
-                listStarImages[x].visibility = View.VISIBLE
-            }
-        }
-        else if (userStars >= characterStarRating) {
-            for (x in (userStars) until listStarImages.size) {
-                if (listStarImages[x].visibility == View.VISIBLE) {
-                    listStarImages[x].visibility = View.GONE
-                }
-            }
-        }
-    }
-
-    private fun showMessageDialogCannotGetCharacter(isEnabled : Boolean) {
+    private fun showMessageDialogCannotGetCharacter() {
         var builder = AlertDialog.Builder(this)
         var dialogView = this.layoutInflater.inflate(R.layout.message_dialog_congratulations,null)
         builder.setView(dialogView)
@@ -122,7 +90,7 @@ class ShopActivity : AppCompatActivity() {
         animationConfeti.visibility = View.GONE
         animation2.visibility = View.GONE
 
-        if (isEnabled) {
+        if (characterShopBrain.isCharacterAvailableToBuy()) {
             animation.setAnimation("clap.json")
         }
         else {
@@ -133,20 +101,20 @@ class ShopActivity : AppCompatActivity() {
         var animationAdapter = AnimatorListenerAdapter(
             onStart = {  },
             onEnd = {
-                onSelectToGetCharacter(isEnabled, messageDialog)
+                onSelectToGetCharacter(messageDialog)
             },
             onCancel = {},
             onRepeat = {}
         )
 
         animation.addAnimatorListener(animationAdapter)
-        acceptButton.setOnClickListener { onSelectToGetCharacter(isEnabled, messageDialog)}
+        acceptButton.setOnClickListener { onSelectToGetCharacter(messageDialog)}
     }
 
-    private  fun onSelectToGetCharacter(isEnabled : Boolean, messageDialog : AlertDialog) {
+    private  fun onSelectToGetCharacter(messageDialog : AlertDialog) {
         messageDialog.cancel()
 
-        if (isEnabled) {
+        if (characterShopBrain.isCharacterAvailableToBuy()) {
             finishActivity()
         }
     }
