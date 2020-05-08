@@ -8,6 +8,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import co.com.zoomathias.zoomathias.utils.Constants
+import co.com.zoomathias.zoomathias.utils.CustomSharedPreferences
 import com.airbnb.lottie.LottieDrawable
 import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
@@ -20,9 +21,11 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        showCharacter()
+
         count.setOnClickListener { OnClickCount() }
         img_config.setOnClickListener { OnClickShop() }
-        animationLeftToRight();
+        animationLeftToRight()
 
     }
 
@@ -36,11 +39,24 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    private fun showCharacter() {
+        val sharedPreferences = CustomSharedPreferences(this)
+        var characterImage = sharedPreferences.getCharacter()
+        if (!characterImage!!.isBlank()){
+            img_main_character.visibility = View.GONE
+            charcter.visibility = View.VISIBLE
+            charcter.setAnimation(characterImage)
+            charcter.playAnimation()
+            charcter.repeatCount = LottieDrawable.INFINITE
+        } else {
+            img_main_character.visibility = View.VISIBLE
+            charcter.visibility = View.GONE
+        }
+    }
+
     fun OnClickCount()
     {
         val intent = Intent(this, CountActivity::class.java)
-        //intent.putExtra("reason",reason)
-        //reason = intent.getStringExtra("reason")
         startActivity(intent)
     }
 

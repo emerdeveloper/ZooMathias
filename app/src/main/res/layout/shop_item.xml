@@ -55,4 +55,14 @@
             app:layout_constraintBottom_toBottomOf="@+id/point"
             app:layout_constraintStart_toStartOf="@+id/point"
             app:srcCompat="@drawable/img_star" />
+
+    <ImageView
+            android:id="@+id/img_number"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:cropToPadding="true"
+            app:layout_constraintStart_toStartOf="@+id/img_framework"
+            app:layout_constraintTop_toTopOf="@+id/img_framework"
+            app:srcCompat="@drawable/number_one" />
 </androidx.constraintlayout.widget.ConstraintLayout>
