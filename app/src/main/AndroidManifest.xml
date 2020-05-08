@@ -22,11 +22,11 @@
         <activity
                 android:name=".HomeActivity"
                 android:screenOrientation="landscape"
-                android:theme="@style/HomeTheme"></activity>
+                android:theme="@style/AppTheme.NoActionBar"></activity><!--android:theme="@style/HomeTheme"-->
         <activity
                 android:name=".CountActivity"
                 android:screenOrientation="landscape"
-                android:theme="@style/BackgroundSky"></activity>
+                android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".ShopActivity"
                   android:screenOrientation="landscape"
                   android:theme="@style/AppTheme.NoActionBar"></activity>

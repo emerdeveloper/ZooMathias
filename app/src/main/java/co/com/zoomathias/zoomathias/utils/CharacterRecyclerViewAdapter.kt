@@ -30,6 +30,7 @@ class CharacterRecyclerViewAdapter (val items : ArrayList<Character>?, val click
         fun bind(character: Character, position: Int, clickListener: (Int) -> Unit) {
             itemView.charcter_framework.setAnimation(character.nameFile)
             itemView.charcter_framework.repeatCount = LottieDrawable.INFINITE
+            itemView.img_number.setImageResource(character.resourceImageNumber)
             itemView.charcter_framework.playAnimation()
             itemView.setOnClickListener { clickListener(position) }
         }

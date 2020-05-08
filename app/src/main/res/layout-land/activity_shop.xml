@@ -44,14 +44,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline2">
 
-        <!--<ImageView
-                android:id="@+id/star_one"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:adjustViewBounds="true"
-                android:cropToPadding="true"
-                app:srcCompat="@drawable/img_star_disabled"
-                tools:ignore="MissingConstraints"/>-->
 
         <ImageView
                 android:id="@+id/star_two"

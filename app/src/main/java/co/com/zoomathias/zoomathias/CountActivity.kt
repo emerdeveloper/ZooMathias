@@ -13,25 +13,24 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import co.com.zoomathias.zoomathias.businesslogic.CharactersShopBrain
+import co.com.zoomathias.zoomathias.businesslogic.CountBrain
 import co.com.zoomathias.zoomathias.utils.AnimatorListenerAdapter
+import co.com.zoomathias.zoomathias.utils.Constants
+import co.com.zoomathias.zoomathias.utils.CustomSharedPreferences
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import kotlinx.android.synthetic.main.activity_count.*
-import kotlin.random.Random
 
 class CountActivity : AppCompatActivity() {
 
-    private var correctOption: Int = 0
-    private var positionCorrectOption: Int = 0
-    private var score : Int = 0
-    private var Attempts: Int = 0
+    private var countBrain = CountBrain()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_count)
 
         shuffleQuestion()
-        //containerAnimals.setOnClickListener { shuffleQuestion() }
         option_one.setOnClickListener { view -> onSelectAnswer(view)  }
         option_two.setOnClickListener { view -> onSelectAnswer(view)  }
         option_three.setOnClickListener { view -> onSelectAnswer(view)  }
@@ -40,7 +39,7 @@ class CountActivity : AppCompatActivity() {
 
     private fun shuffleQuestion() {
         animationNumbers()
-        printImages()
+        countBrain.showImages(numberImages(), animalImages())
         animationAnimals()
     }
 
@@ -57,25 +56,24 @@ class CountActivity : AppCompatActivity() {
 
     private fun validateAnswers(positionSelected : Int)
     {
-        Attempts++
-        if (positionCorrectOption == positionSelected) {
-            score++
+        if (countBrain.isValidAnswers(positionSelected))
+        {
             showMessageDialog()
-            //Toast.makeText(this, "You answer is correct: " + correctOption + "in position: "+ positionCorrectOption, Toast.LENGTH_SHORT).show()
-        }
-        else {
+        } else {
             showMessageDialog(true)
-            //Toast.makeText(this, "Incorrect Answer", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun validateScore(messageDialog: AlertDialog)
     {
-        if (Attempts == 6)
+        if (countBrain.isFinishAttempts())
         {
-            if (score >= 4)
+            if (countBrain.isWinner())
             {
-                showMessageWinner()
+                val sharedPreferences = CustomSharedPreferences(this)
+                val score = sharedPreferences.getScore() + Constants.POINT_BY_WIN
+                sharedPreferences.saveScore(score)
+                showMessageWinner(score)
                 playWinner()
             }
             else
@@ -90,141 +88,14 @@ class CountActivity : AppCompatActivity() {
         messageDialog.cancel()
     }
 
-    private fun printImages() {
-        var randomNumbers = getRandomNumbers()
-        correctOption = getCorrectOption(randomNumbers)
-        positionCorrectOption = randomNumbers.indexOf(correctOption)
-        var imagesToPrint = matchImageWithNumbers()
-
-        printCorrectNumberOption(positionCorrectOption, imagesToPrint[correctOption]?.get("number")!!)
-        //animal_seven.setImageResource(imagesToPrint[correctOption]?.get("animal")!!)
-
-        printIncorrectNumberOptions(positionCorrectOption, imagesToPrint, randomNumbers)
-
-        printCorrectAnimalOption(correctOption, imagesToPrint[correctOption]?.get("animal")!!)
+    private fun numberImages(): List<ImageView> {
+        return listOf<ImageView>(img_number_left, img_number_center,img_number_right)
     }
 
-    private fun printCorrectNumberOption(positionNumber: Int, imageNumber : Int) {
-        //img_number_left.setImageResource(images["number"]!!)
-        when (positionNumber) {
-            0 -> img_number_left.setImageResource(imageNumber)
-            1 -> img_number_center.setImageResource(imageNumber)
-            2 -> img_number_right.setImageResource(imageNumber)
-        }
-    }
-
-    private fun printIncorrectNumberOptions(correctPosition: Int, incorrectNumberOptions : HashMap<Int, HashMap<String, Int>>, incorrectOptions: List<Int>) {
-        when (correctPosition) {
-            0 -> {
-                img_number_center.setImageResource(incorrectNumberOptions[incorrectOptions[1]]?.get("number")!!)
-                img_number_right.setImageResource(incorrectNumberOptions[incorrectOptions[2]]?.get("number")!!)
-            }
-            1 -> {
-                img_number_left.setImageResource(incorrectNumberOptions[incorrectOptions[2]]?.get("number")!!)
-                img_number_right.setImageResource(incorrectNumberOptions[incorrectOptions[0]]?.get("number")!!)
-            }
-            2 -> {
-                img_number_center.setImageResource(incorrectNumberOptions[incorrectOptions[1]]?.get("number")!!)
-                img_number_left.setImageResource(incorrectNumberOptions[incorrectOptions[0]]?.get("number")!!)
-            }
-        }
-    }
-
-    private fun printCorrectAnimalOption(numberOfImages: Int, animalImage : Int) {
-        var listAnimalImages = listOf<ImageView>(animal_one, animal_two, animal_three,
-                                                animal_four, animal_five, animal_six,
-                                                animal_seven, animal_eight, animal_nine)
-
-        for (x in listAnimalImages.indices) {
-            if (x < (numberOfImages)) {
-                if (listAnimalImages[x].visibility == View.GONE)
-                {
-                    listAnimalImages[x].visibility = View.VISIBLE
-                }
-                listAnimalImages[x].setImageResource(animalImage)
-            }
-            else {
-                listAnimalImages[x].visibility = View.GONE
-            }
-        }
-    }
-
-    private fun getRandomNumbers(): List<Int> {
-        var randomList = List(3) { Random.nextInt(1, 9) }
-        var nonRepeatingItemList : MutableList<Int> = mutableListOf()
-        var lsitDistic = randomList.distinct()
-
-
-        if (lsitDistic.size == 3)
-        {
-            return randomList
-        }
-
-        for (i in lsitDistic )
-        {
-            nonRepeatingItemList.add(i)
-        }
-
-        if (nonRepeatingItemList.size < 3)
-        {
-            var index = nonRepeatingItemList.size
-            do {
-                var random = (1..9).random()
-                if (!nonRepeatingItemList.contains(random))
-                {
-                    nonRepeatingItemList.add(index, random)
-                    index++
-                }
-            } while (nonRepeatingItemList.size < 3)
-
-        }
-        return nonRepeatingItemList
-    }
-
-    private fun getCorrectOption(randomList: List<Int>) : Int {
-        return randomList[(0..2).random()]
-    }
-
-    private fun matchImageWithNumbers() : HashMap<Int, HashMap<String, Int>> {
-        val rootHashmap = HashMap<Int, HashMap<String, Int>>()
-        var ImagesItems = HashMap<String, Int>()
-
-        ImagesItems["number"] = R.drawable.number_one_recognize
-        ImagesItems["animal"] =  R.drawable.animal_cat
-        rootHashmap[1] = ImagesItems
-        ImagesItems = HashMap()
-        ImagesItems["number"] = R.drawable.number_two_recognize
-        ImagesItems["animal"] =  R.drawable.animal_pork
-        rootHashmap[2] =  ImagesItems
-        ImagesItems = HashMap()
-        ImagesItems["number"] = R.drawable.number_three_recognize
-        ImagesItems["animal"] =  R.drawable.animal_giraffe
-        rootHashmap[3] =  ImagesItems
-        ImagesItems = HashMap()
-        ImagesItems["number"] = R.drawable.number_four_recognize
-        ImagesItems["animal"] =  R.drawable.animal_lion
-        rootHashmap[4] =  ImagesItems
-        ImagesItems = HashMap()
-        ImagesItems["number"] = R.drawable.number_five_recognize
-        ImagesItems["animal"] =  R.drawable.animal_chicken
-        rootHashmap[5] =  ImagesItems
-        ImagesItems = HashMap()
-        ImagesItems["number"] = R.drawable.number_six_recognize
-        ImagesItems["animal"] =  R.drawable.animal_mouse
-        rootHashmap[6] =  ImagesItems
-        ImagesItems = HashMap()
-        ImagesItems["number"] = R.drawable.number_seven_recognize
-        ImagesItems["animal"] =  R.drawable.animal_cow
-        rootHashmap[7] =  ImagesItems
-        ImagesItems = HashMap()
-        ImagesItems["number"] = R.drawable.number_eight_recognize
-        ImagesItems["animal"] =  R.drawable.animal_elephant
-        rootHashmap[8] =  ImagesItems
-        ImagesItems = HashMap()
-        ImagesItems["number"] = R.drawable.number_nine_recognize
-        ImagesItems["animal"] =  R.drawable.animal_rabbit
-        rootHashmap[9] =  ImagesItems
-        return rootHashmap
+    private fun animalImages(): List<ImageView> {
+        return listOf<ImageView>(animal_one, animal_two, animal_three,
+            animal_four, animal_five, animal_six,
+            animal_seven, animal_eight, animal_nine)
     }
 
     private fun animationAnimals() {
@@ -250,6 +121,8 @@ class CountActivity : AppCompatActivity() {
         var acceptButton = dialogView.findViewById<TextView>(R.id.btn_accept)
         var animation = dialogView.findViewById<LottieAnimationView>(R.id.animation)
         var containerMessageDialog = dialogView.findViewById<ConstraintLayout>(R.id.containerMessageDialog)
+        var containerStar = dialogView.findViewById<ConstraintLayout>(R.id.containerStar)
+        containerStar.visibility = View.GONE
 
         if (isFail)
         {
@@ -278,7 +151,7 @@ class CountActivity : AppCompatActivity() {
         mediaPlayer?.start()
     }
 
-    private fun showMessageWinner() {
+    private fun showMessageWinner(starNumber: Int) {
         var builder = AlertDialog.Builder(this)
         var dialogView = this.layoutInflater.inflate(R.layout.message_dialog_congratulations,null)
         builder.setView(dialogView)
@@ -290,7 +163,9 @@ class CountActivity : AppCompatActivity() {
         var animation = dialogView.findViewById<LottieAnimationView>(R.id.animation)
         var animation2 = dialogView.findViewById<LottieAnimationView>(R.id.animation2)
         var animationConfeti = dialogView.findViewById<LottieAnimationView>(R.id.animationConfeti)
+        var containerStar = dialogView.findViewById<ConstraintLayout>(R.id.containerStar)
         animationConfeti.visibility = View.VISIBLE
+        containerStar.visibility = View.GONE
 
         animation.setAnimation("smile.json")
         animation.playAnimation()
@@ -315,7 +190,9 @@ class CountActivity : AppCompatActivity() {
         var animationAdapter2 = AnimatorListenerAdapter(
             onStart = {  },
             onEnd = {
-                messageDialog.cancel()
+                containerStar.visibility = View.VISIBLE
+                animation2.visibility = View.GONE
+                showStarts(starNumber, dialogView)
             },
             onCancel = {},
             onRepeat = {}
@@ -343,6 +220,8 @@ class CountActivity : AppCompatActivity() {
         var animation = dialogView.findViewById<LottieAnimationView>(R.id.animation)
         var animationConfetti = dialogView.findViewById<LottieAnimationView>(R.id.animationConfeti)
         animationConfetti.visibility = View.GONE
+        var containerStar = dialogView.findViewById<ConstraintLayout>(R.id.containerStar)
+        containerStar.visibility = View.GONE
 
         animation.setAnimation("sad.json")
         animation.playAnimation()
@@ -359,5 +238,21 @@ class CountActivity : AppCompatActivity() {
 
         animation.addAnimatorListener(animationAdapter)
         acceptButton.setOnClickListener { messageDialog.cancel()}
+    }
+
+    private fun showStarts(starNumber: Int, view: View) {
+        val characterShopBrain = CharactersShopBrain(starNumber)
+        characterShopBrain.showUserStars(starImages(view))
+    }
+
+    private fun starImages(view: View): List<ImageView> {
+        return listOf<ImageView>(view.findViewById<ImageView>(R.id.star_two),
+            view.findViewById<ImageView>(R.id.star_three),
+            view.findViewById<ImageView>(R.id.star_four),
+            view.findViewById<ImageView>(R.id.star_five),
+            view.findViewById<ImageView>(R.id.star_six),
+            view.findViewById<ImageView>(R.id.star_seven),
+            view.findViewById<ImageView>(R.id.star_eight),
+            view.findViewById<ImageView>(R.id.star_nine))
     }
 }

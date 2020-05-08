@@ -15,7 +15,17 @@ class CustomSharedPreferences (
         sharedPreferences?.edit()?.putString("character", value)?.apply()
     }
 
+    fun saveScore(value: Int) {
+        sharedPreferences?.edit()?.putInt("score", value)?.apply()
+    }
+
     fun getCharacter(): String? {
         return sharedPreferences?.getString("character", "")
+    }
+
+    fun getScore(): Int {
+        return if (sharedPreferences?.contains("score")!!)
+            sharedPreferences?.getInt("score", 0)!!
+        else 0
     }
 }

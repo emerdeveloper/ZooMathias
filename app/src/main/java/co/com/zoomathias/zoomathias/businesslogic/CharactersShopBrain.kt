@@ -5,7 +5,7 @@ import android.widget.ImageView
 import co.com.zoomathias.zoomathias.R
 import co.com.zoomathias.zoomathias.models.Character
 
-class CharactersShopBrains (
+class CharactersShopBrain (
     private val userStars: Int
 ) {
     private var characters: ArrayList<Character>?
@@ -71,11 +71,11 @@ class CharactersShopBrains (
 
     private fun addCharacters() : ArrayList<Character> {
         val characters: ArrayList<Character> = ArrayList()
-        characters.add(Character("chicken.json", 8))
-        characters.add(Character("mouse.json", 6))
-        characters.add(Character("cat.json", 6))
-        characters.add(Character("pigeon.json", 4))
-        characters.add(Character("bee.json", 5))
+        characters.add(Character("chicken.json", 8, R.drawable.number_eight_recognize))
+        characters.add(Character("mouse.json", 6, R.drawable.number_six_recognize))
+        characters.add(Character("cat.json", 6, R.drawable.number_six_recognize))
+        characters.add(Character("pigeon.json", 4, R.drawable.number_four_recognize))
+        characters.add(Character("bee.json", 5, R.drawable.number_five_recognize))
         return characters
     }
 }

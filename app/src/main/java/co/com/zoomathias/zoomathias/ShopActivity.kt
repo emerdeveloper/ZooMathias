@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
-import co.com.zoomathias.zoomathias.businesslogic.CharactersShopBrains
+import co.com.zoomathias.zoomathias.businesslogic.CharactersShopBrain
 import co.com.zoomathias.zoomathias.utils.AnimatorListenerAdapter
 import co.com.zoomathias.zoomathias.utils.CharacterRecyclerViewAdapter
 import co.com.zoomathias.zoomathias.utils.Constants
@@ -23,12 +23,14 @@ import kotlinx.android.synthetic.main.activity_shop.img_return
 class ShopActivity : AppCompatActivity() {
 
 
-    private var characterShopBrain = CharactersShopBrains(5)
+    private lateinit var characterShopBrain: CharactersShopBrain
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop)
 
+
+        characterShopBrain = CharactersShopBrain(getScore())
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.hasFixedSize()
         recyclerView.adapter = CharacterRecyclerViewAdapter(characterShopBrain.getCharacters(), this::barberItemClicked)
@@ -49,6 +51,11 @@ class ShopActivity : AppCompatActivity() {
             sharedPreferences.saveCharacter(characterShopBrain.getCharacterImage())
         }
         finish()
+    }
+
+    private fun getScore(): Int {
+        val sharedPreferences = CustomSharedPreferences(this)
+        return sharedPreferences.getScore()
     }
 
     private fun barberItemClicked(characterSelected : Int) {

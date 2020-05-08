@@ -39,13 +39,18 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    fun showCharacter() {
+    private fun showCharacter() {
         val sharedPreferences = CustomSharedPreferences(this)
         var characterImage = sharedPreferences.getCharacter()
         if (!characterImage!!.isBlank()){
+            img_main_character.visibility = View.GONE
+            charcter.visibility = View.VISIBLE
             charcter.setAnimation(characterImage)
             charcter.playAnimation()
             charcter.repeatCount = LottieDrawable.INFINITE
+        } else {
+            img_main_character.visibility = View.VISIBLE
+            charcter.visibility = View.GONE
         }
     }
 

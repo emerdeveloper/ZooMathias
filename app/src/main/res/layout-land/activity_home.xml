@@ -7,6 +7,19 @@
         android:layout_height="match_parent"
         tools:context=".HomeActivity">
 
+    <ImageView
+            android:id="@+id/img_background"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:adjustViewBounds="false"
+            android:cropToPadding="false"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/img_home_background" />
+
     <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/charcter"
             android:layout_width="230dp"
@@ -16,6 +29,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:lottie_autoPlay="true"
             app:lottie_loop="true" />
+
+    <ImageView
+            android:id="@+id/img_main_character"
+            android:layout_width="230dp"
+            android:layout_height="230dp"
+            android:adjustViewBounds="false"
+            android:cropToPadding="false"
+            app:layout_constraintBottom_toTopOf="@+id/img_info"
+            app:layout_constraintEnd_toStartOf="@+id/container"
+            app:layout_constraintStart_toStartOf="@+id/img_background"
+            app:srcCompat="@drawable/main_character" />
 
     <ImageView
             android:layout_width="80dp"
