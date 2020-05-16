@@ -1,6 +1,5 @@
 package co.com.zoomathias.zoomathias
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -24,6 +23,7 @@ class HomeActivity : AppCompatActivity() {
         showCharacter()
 
         count.setOnClickListener { OnClickCount() }
+        recognize.setOnClickListener { OnClickRecognize() }
         img_config.setOnClickListener { OnClickShop() }
         animationLeftToRight()
 
@@ -54,20 +54,22 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    fun OnClickCount()
-    {
+    fun OnClickRecognize() {
+        val intent = Intent(this, RecognizeActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun OnClickCount() {
         val intent = Intent(this, CountActivity::class.java)
         startActivity(intent)
     }
 
-    fun OnClickShop()
-    {
+    fun OnClickShop() {
         val intent = Intent(this, ShopActivity::class.java)
         startActivityForResult(intent, Constants.REQUEST_CODE)
     }
 
-    fun animationLeftToRight()
-    {
+    fun animationLeftToRight() {
         var animation : Animation = AnimationUtils.loadAnimation(this, R.anim.lefttoright)
         container.startAnimation(animation)
 
@@ -87,8 +89,7 @@ class HomeActivity : AppCompatActivity() {
         })
     }
 
-    fun animationBounce()
-    {
+    fun animationBounce() {
         var animation = AnimationUtils.loadAnimation(this, R.anim.bounce)
         recognize.startAnimation(animation)
         count.startAnimation(animation)
@@ -108,8 +109,7 @@ class HomeActivity : AppCompatActivity() {
         })
     }
 
-    fun animationRotate()
-    {
+    fun animationRotate() {
         var animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
         img_config.startAnimation(animation)
         img_info.startAnimation(animation)
@@ -130,8 +130,7 @@ class HomeActivity : AppCompatActivity() {
         })
     }
 
-    fun timerAnimationRecognize()
-    {
+    fun timerAnimationRecognize() {
         val timer = Timer("schedule", true)
 
         timer.scheduleAtFixedRate(5000, 25000) {
@@ -139,8 +138,7 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    fun timerAnimationCount()
-    {
+    fun timerAnimationCount() {
         val timer = Timer("scheduleTwo", true)
 
         timer.scheduleAtFixedRate(10000, 25000) {
