@@ -21,6 +21,7 @@ class RecognizeActivity : AppCompatActivity() {
         img_return.setOnClickListener { finish() }
         sliderAdapter = CountViewPagerAdapter(this)
         viewPagerContainer.adapter = sliderAdapter
+        img_background.tag = "jungle"
 
         addIndicators(0)
         viewPagerContainer?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -33,6 +34,17 @@ class RecognizeActivity : AppCompatActivity() {
             }
             override fun onPageSelected(position: Int) {
                 addIndicators(position)
+                if (position == 1 || position == 2) {
+                    if (img_background.tag == "jungle") {
+                        img_background.setImageResource(R.drawable.img_count_background_water)
+                        img_background.tag = "water"
+                    }
+                } else {
+                    if (img_background.tag == "water") {
+                        img_background.setImageResource(R.drawable.img_count_background_jungle)
+                        img_background.tag = "jungle"
+                    }
+                }
             }
 
         })
