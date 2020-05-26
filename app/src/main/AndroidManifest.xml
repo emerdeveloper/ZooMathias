@@ -30,6 +30,12 @@
         <activity android:name=".ShopActivity"
                   android:screenOrientation="landscape"
                   android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".RecognizeActivity"
+                android:screenOrientation="landscape"
+                android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".CreditsActivity"
+                android:screenOrientation="landscape"
+                android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
