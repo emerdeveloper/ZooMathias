@@ -1,6 +1,7 @@
 package co.com.zoomathias.zoomathias.utils
 
 import android.content.Context
+import android.media.MediaPlayer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +27,9 @@ class CountViewPagerAdapter(private val mContext: Context) : PagerAdapter() {
         var animalImage = view.findViewById<ImageView>(R.id.animal_recognize)
         var animalName = view.findViewById<TextView>(R.id.labelAnimalName)
 
+        numberImage.setOnClickListener { playAudioNumber(position) }
+        animalImage.setOnClickListener { playAudioAnimal(position) }
+
         recognizeBrain.showAnimal(animalImage, animalName, position)
         recognizeBrain.showNumber(numberImage, position)
         recognizeBrain.showHands(handImageOne, handImageTwo, position)
@@ -44,5 +48,17 @@ class CountViewPagerAdapter(private val mContext: Context) : PagerAdapter() {
 
     override fun destroyItem(container: ViewGroup, position: Int, o: Any) {
         container.removeView(o as ConstraintLayout)
+    }
+
+    private fun playAudioNumber(position: Int){
+        var audio = recognizeBrain.getAudioNumber(position)
+        var mediaPlayer: MediaPlayer = MediaPlayer.create(mContext, audio)
+        mediaPlayer?.start()
+    }
+
+    private fun playAudioAnimal(position: Int){
+        var audio = recognizeBrain.getAudioAnimal(position)
+        var mediaPlayer: MediaPlayer = MediaPlayer.create(mContext, audio)
+        mediaPlayer?.start()
     }
 }

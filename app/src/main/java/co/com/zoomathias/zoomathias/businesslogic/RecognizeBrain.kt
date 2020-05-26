@@ -37,36 +37,44 @@ class RecognizeBrain {
         val resources: ArrayList<Recognize> = ArrayList()
         var hands: ArrayList<Int> = ArrayList()
         hands.add(R.drawable.hand_number_one)
-        resources.add(Recognize(R.drawable.number_one, hands, R.drawable.animal_r_unicorn, "Unicornio"))
+        resources.add(Recognize(R.drawable.number_one, hands, R.drawable.animal_r_unicorn, "Unicornio", R.raw.one, R.raw.unicorn))
         hands = ArrayList()
         hands.add(R.drawable.hand_number_two)
-        resources.add(Recognize(R.drawable.number_two, hands, R.drawable.animal_r_dolphin, "Delfin"))
+        resources.add(Recognize(R.drawable.number_two, hands, R.drawable.animal_r_dolphin, "Delfín", R.raw.two, R.raw.dolphin))
         hands = ArrayList()
         hands.add(R.drawable.hand_number_three)
-        resources.add(Recognize(R.drawable.number_three, hands, R.drawable.animal_r_shark, "Tiburón"))
+        resources.add(Recognize(R.drawable.number_three, hands, R.drawable.animal_r_shark, "Tiburón", R.raw.three, R.raw.shark))
         hands = ArrayList()
         hands.add(R.drawable.hand_number_four)
-        resources.add(Recognize(R.drawable.number_four, hands, R.drawable.animal_r_kangaroo, "Canguro"))
+        resources.add(Recognize(R.drawable.number_four, hands, R.drawable.animal_r_kangaroo, "Canguro", R.raw.four, R.raw.kangaroo))
         hands = ArrayList()
         hands.add(R.drawable.hand_number_five)
-        resources.add(Recognize(R.drawable.number_five, hands, R.drawable.animal_r_camel, "Camello"))
+        resources.add(Recognize(R.drawable.number_five, hands, R.drawable.animal_r_camel, "Camello", R.raw.five, R.raw.camel))
         hands = ArrayList()
         hands.add(R.drawable.hand_number_five)
         hands.add(R.drawable.hand_number_one)
-        resources.add(Recognize(R.drawable.number_six, hands, R.drawable.animal_r_snake, "Serpiente"))
+        resources.add(Recognize(R.drawable.number_six, hands, R.drawable.animal_r_snake, "Serpiente", R.raw.six, R.raw.snake))
         hands = ArrayList()
         hands.add(R.drawable.hand_number_five)
         hands.add(R.drawable.hand_number_two)
-        resources.add(Recognize(R.drawable.number_seven, hands, R.drawable.animal_r_toad, "Sapo"))
+        resources.add(Recognize(R.drawable.number_seven, hands, R.drawable.animal_r_toad, "Sapo", R.raw.seven, R.raw.toad))
         hands = ArrayList()
         hands.add(R.drawable.hand_number_five)
         hands.add(R.drawable.hand_number_three)
-        resources.add(Recognize(R.drawable.number_eight, hands, R.drawable.animal_r_bear, "Oso"))
+        resources.add(Recognize(R.drawable.number_eight, hands, R.drawable.animal_r_bear, "Oso", R.raw.eight, R.raw.bear))
         hands = ArrayList()
         hands.add(R.drawable.hand_number_five)
         hands.add(R.drawable.hand_number_four)
-        resources.add(Recognize(R.drawable.number_nine, hands, R.drawable.animal_r_otter, "Nutria"))
+        resources.add(Recognize(R.drawable.number_nine, hands, R.drawable.animal_r_otter, "Nutria", R.raw.nine, R.raw.otter))
 
         return resources
+    }
+
+    fun getAudioNumber(position: Int): Int {
+        return resourcesImages[position].audioNumber
+    }
+
+    fun getAudioAnimal(position: Int): Int {
+        return resourcesImages[position].audioAnimal
     }
 }

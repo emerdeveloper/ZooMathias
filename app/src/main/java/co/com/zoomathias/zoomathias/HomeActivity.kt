@@ -25,6 +25,9 @@ class HomeActivity : AppCompatActivity() {
         count.setOnClickListener { OnClickCount() }
         recognize.setOnClickListener { OnClickRecognize() }
         img_config.setOnClickListener { OnClickShop() }
+        img_info.setOnClickListener { v ->
+            startActivity(Intent(this, CreditsActivity::class.java))
+        }
         animationLeftToRight()
 
     }
