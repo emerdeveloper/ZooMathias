@@ -200,7 +200,7 @@ class CountActivity : AppCompatActivity() {
 
         animation.addAnimatorListener(animationAdapter)
         animation2.addAnimatorListener(animationAdapter2)
-        acceptButton.setOnClickListener { messageDialog.cancel()}
+        acceptButton.setOnClickListener { finishActivity(messageDialog)}
     }
 
     private fun playWinner() {
@@ -230,14 +230,20 @@ class CountActivity : AppCompatActivity() {
         var animationAdapter = AnimatorListenerAdapter(
             onStart = { },
             onEnd = {
-                messageDialog.cancel()
+                finishActivity(messageDialog)
             },
             onCancel = {},
             onRepeat = {}
         )
 
         animation.addAnimatorListener(animationAdapter)
-        acceptButton.setOnClickListener { messageDialog.cancel()}
+        acceptButton.setOnClickListener { finishActivity(messageDialog)}
+    }
+
+
+    private fun finishActivity(messageDialog: AlertDialog) {
+        messageDialog.cancel()
+        finish()
     }
 
     private fun showStarts(starNumber: Int, view: View) {
