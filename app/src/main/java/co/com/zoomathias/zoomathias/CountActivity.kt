@@ -208,6 +208,11 @@ class CountActivity : AppCompatActivity() {
         mediaPlayer?.start()
     }
 
+    private fun playGameOver() {
+        var mediaPlayer: MediaPlayer = MediaPlayer.create(this, R.raw.try_again)
+        mediaPlayer?.start()
+    }
+
     private fun showMessageFailed() {
         var builder = AlertDialog.Builder(this)
         var dialogView = this.layoutInflater.inflate(R.layout.message_dialog_congratulations,null)
@@ -226,6 +231,8 @@ class CountActivity : AppCompatActivity() {
         animation.setAnimation("sad.json")
         animation.playAnimation()
         animation.repeatCount = 2
+
+        playGameOver()
 
         var animationAdapter = AnimatorListenerAdapter(
             onStart = { },
