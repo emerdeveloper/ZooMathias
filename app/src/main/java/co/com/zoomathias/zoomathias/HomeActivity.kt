@@ -35,6 +35,10 @@ class HomeActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
             super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constants.REQUEST_CODE && resultCode == Constants.RESULT_CODE) {
+            if (img_main_character.visibility == View.VISIBLE) {
+                img_main_character.visibility = View.GONE
+                charcter.visibility = View.VISIBLE
+            }
             val characterImage = data!!.getStringExtra(Constants.EXTRA_NAME_CHARACTER)
             charcter.setAnimation(characterImage)
             charcter.playAnimation()
