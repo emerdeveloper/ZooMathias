@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.com.zoomathias.zoomathias.businesslogic.CharactersShopBrain
 import co.com.zoomathias.zoomathias.utils.AnimatorListenerAdapter
@@ -59,7 +60,6 @@ class ShopActivity : AppCompatActivity() {
     }
 
     private fun barberItemClicked(characterSelected : Int) {
-        //Toast.makeText(this, "Clicked: ${characterSelected}", Toast.LENGTH_LONG).show()
         characterShopBrain.characterSelected(characterSelected)
         charcter.setAnimation(characterShopBrain.getCharacterImage())
         charcter.playAnimation()
@@ -94,6 +94,8 @@ class ShopActivity : AppCompatActivity() {
         var animation = dialogView.findViewById<LottieAnimationView>(R.id.animation)
         var animation2 = dialogView.findViewById<LottieAnimationView>(R.id.animation2)
         var animationConfeti = dialogView.findViewById<LottieAnimationView>(R.id.animationConfeti)
+        var containerStar = dialogView.findViewById<ConstraintLayout>(R.id.containerStar)
+        containerStar.visibility = View.GONE
         animationConfeti.visibility = View.GONE
         animation2.visibility = View.GONE
 
