@@ -1,9 +1,5 @@
 package co.com.zoomathias.zoomathias
 
-import android.content.ContentResolver
-import android.graphics.Color
-import android.media.MediaPlayer
-import android.net.Uri
 import android.os.Bundle
 import android.text.Html
 import android.widget.TextView
